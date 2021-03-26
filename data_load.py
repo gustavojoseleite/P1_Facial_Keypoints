@@ -36,7 +36,7 @@ class FacialKeypointsDataset(Dataset):
         if(image.shape[2] == 4):
             image = image[:,:,0:3]
         
-        key_pts = self.key_pts_frame.iloc[idx, 1:].as_matrix()
+        key_pts = self.key_pts_frame.iloc[idx, 1:].to_numpy()
         key_pts = key_pts.astype('float').reshape(-1, 2)
         sample = {'image': image, 'keypoints': key_pts}
 
@@ -44,9 +44,9 @@ class FacialKeypointsDataset(Dataset):
             sample = self.transform(sample)
 
         return sample
-    
 
-    
+
+
 # tranforms
 
 class Normalize(object):
@@ -159,3 +159,5 @@ class ToTensor(object):
         
         return {'image': torch.from_numpy(image),
                 'keypoints': torch.from_numpy(key_pts)}
+
+
